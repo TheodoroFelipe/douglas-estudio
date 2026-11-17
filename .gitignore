@@ -1,0 +1,24 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+.vercel/
+
+# Variáveis de ambiente (nunca commitar chaves)
+.env
+.env.local
+.env.*.local
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Logs e sistema
+*.log
+.DS_Store
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
