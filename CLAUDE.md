@@ -46,13 +46,13 @@ Apenas dois usuários, sem cadastro público:
    - Recebido sem nota **não é alerta** enquanto o trabalho estiver em andamento; é o fluxo normal.
 6. Nota cancelada não entra em nenhum total, mas continua visível no histórico.
 7. Não apagar registros financeiros: usar status (`cancelada`, `estornado`) em vez de DELETE.
-8. **Despesas:** cada despesa tem um **tipo de despesa**. Os tipos são cadastrados pelo próprio usuário (dono ou admin), e cada um é classificado como **direto** (custo de um trabalho específico: segundo fotógrafo, álbum, deslocamento) ou **indireto** (custo do estúdio: aluguel, equipamento, software, DAS). Despesa de tipo direto exige um trabalho; despesa de tipo indireto não tem trabalho. O resultado de cada trabalho é recebido − despesas diretas.
+8. **Despesas:** cada despesa tem um **tipo de despesa**. Os tipos são cadastrados pelo próprio usuário (dono ou admin), e cada um é classificado como **direto** (custo de um trabalho específico: segundo fotógrafo, álbum, deslocamento) ou **indireto** (custo do estúdio: aluguel, equipamento, software, DAS). Despesa de tipo direto exige um trabalho; despesa de tipo indireto não tem trabalho. O resultado de cada trabalho é recebido − despesas diretas. No banco, `tipos_despesa.classificacao` vale `direta` ou `indireta`. A **taxa da maquininha** é lançada no próprio recebimento (`recebimentos.taxa`) e as views já a contam como despesa direta; não existe tipo de despesa "Taxa de cartão", para não contar em dobro.
 9. **Dados fiscais padrão:** código de tributação nacional do serviço **13.03.01** (fotografia), já preenchido em toda nota nova e editável em Configurações.
 10. **Recibo:** leva o **logo do estúdio** (enviado em Configurações e guardado no Storage).
 
 ## Proteção de dados (LGPD)
 
-- Guardar só o necessário do cliente: nome, CPF/CNPJ, telefone, e-mail. Nada além disso sem motivo.
+- Guardar só o necessário do cliente: nome, CPF/CNPJ, telefone, e-mail e endereço (exigido no recibo e na NFS-e). Nada além disso sem motivo. O campo `observacoes` é para anotações do trabalho; a tela avisa para não guardar dado pessoal ali.
 - PDFs/XMLs das notas em bucket **privado** do Storage, acessados por URL assinada.
 - Nunca commitar chaves. `.env.local` no `.gitignore`; só a `anon key` vai para o front.
 
@@ -61,6 +61,21 @@ Apenas dois usuários, sem cadastro público:
 - Código e nomes de tabelas/colunas em **português sem acento** e `snake_case` no banco (`notas_fiscais`, `data_emissao`). Componentes React em `PascalCase`.
 - Interface 100% em português do Brasil.
 - Migrations SQL versionadas em `supabase/migrations/`. Nada de alterar o banco "na mão" sem migration.
+- Regras de negócio que protegem dinheiro ficam no banco (constraints, triggers, RLS), não só no front. Toda regra nova ganha teste em `supabase/tests/database/` (pgTAP).
+- Views sempre `with (security_invoker = true)`; sem isso elas ignoram o RLS.
+- Datas de negócio são `date`; "hoje" é `public.hoje()` (fuso `America/Sao_Paulo`), nunca `current_date`.
+- Dinheiro no front em centavos (inteiro); para RPCs, enviar valores como texto (`"3000.00"`).
+
+## Comandos
+
+| Comando | O que faz |
+|---|---|
+| `npm run dev` | front em http://localhost:5173 |
+| `npm run db:iniciar` / `db:parar` | Supabase local (portas 553xx, para não colidir com outros projetos) |
+| `npm run db:resetar` | recria o banco local aplicando as migrations |
+| `npm run db:testar` | testes pgTAP do banco |
+| `npm run db:tipos` | regera `src/lib/tipos-banco.ts` depois de mudar o schema |
+| `npm test` / `npm run lint` / `npm run build` | testes do front, lint e build |
 - Um commit por fase/funcionalidade, mensagem em português.
 - Antes de implementar algo grande, apresentar o plano e esperar aprovação.
 
