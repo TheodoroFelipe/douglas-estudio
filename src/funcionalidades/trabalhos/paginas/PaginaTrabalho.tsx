@@ -78,7 +78,7 @@ export function PaginaTrabalho() {
             <h2 id="titulo-parcelas" className="mb-3 text-base font-semibold text-stone-900">
               Parcelas
             </h2>
-            <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+            <div className="relative overflow-x-auto rounded-xl border border-stone-200 bg-white">
               <table className="w-full min-w-[34rem] text-sm">
                 <thead className="bg-stone-50 text-left text-stone-600">
                   <tr>

@@ -47,7 +47,7 @@ export function PaginaRecibos() {
       ) : data.length === 0 ? (
         <Alerta>Nenhum recibo emitido em {ano}.</Alerta>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+        <div className="relative overflow-x-auto rounded-xl border border-stone-200 bg-white">
           <table className="w-full min-w-[52rem] text-sm">
             <thead className="bg-stone-50 text-left text-stone-600">
               <tr>

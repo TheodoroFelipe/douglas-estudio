@@ -193,7 +193,7 @@ Sugestão inicial (pode editar):
 - [ ] Não conseguir salvar despesa de tipo direto sem trabalho
 - [ ] Lançar despesas diretas e ver o resultado do trabalho
 - [x] Recibo sai com o logo do estúdio
-- [ ] Painel consolidado mostra receitas, despesas e resultado por mês
+- [x] Painel consolidado mostra receitas, despesas e resultado por mês
 - [ ] CSV do mês abre certo no Excel (separador `;`, decimal `,`, UTF-8 com BOM)
 
 ## 7. Decisões em aberto

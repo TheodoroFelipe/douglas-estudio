@@ -463,8 +463,16 @@ isOneToOne: false
 "hoje":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
+"painel_periodo":
+{ Args: { "p_fim": string,"p_inicio": string }; Returns: {
+              "a_receber": number,"despesas_diretas": number,"despesas_indiretas": number,"faturado": number,"mes": string,"previsto": number,"recebido": number,"resultado": number,"taxas": number
+            }[]
+                           },
 "salvar_trabalho":
 { Args: { "p_parcelas": Json,"p_trabalho": Json }; Returns: string
+                           },
+"total_vencido":
+{ Args: Record<PropertyKey, never>; Returns: number
                            }
           }
           Enums: {

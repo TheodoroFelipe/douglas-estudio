@@ -18,7 +18,7 @@ type Props = {
 
 export function TabelaRecebimentos({ recebimentos, mostrarTrabalho = false }: Props) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+    <div className="relative overflow-x-auto rounded-xl border border-stone-200 bg-white">
       <table className={`w-full text-sm ${mostrarTrabalho ? 'min-w-[56rem]' : 'min-w-[44rem]'}`}>
         <thead className="bg-stone-50 text-left text-stone-600">
           <tr>

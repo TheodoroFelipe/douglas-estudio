@@ -294,7 +294,7 @@ function TabelaParcelas({ control, register, errors, setValue, remover, quantida
   const rotulos = chaves.map((_, i) => (temSinal ? (i === 0 ? 'Sinal' : `${i}/${totalParcelas}`) : `${i + 1}/${totalParcelas}`))
 
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table className="w-full min-w-[32rem] text-sm">
         <thead>
           <tr className="border-b border-stone-200 text-left text-stone-600">

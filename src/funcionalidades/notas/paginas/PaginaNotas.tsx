@@ -87,7 +87,7 @@ function Pendentes() {
 
 function TabelaNotas({ notas }: { notas: Nota[] }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+    <div className="relative overflow-x-auto rounded-xl border border-stone-200 bg-white">
       <table className="w-full min-w-[56rem] text-sm">
         <thead className="bg-stone-50 text-left text-stone-600">
           <tr>

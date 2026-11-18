@@ -73,7 +73,7 @@ export function PaginaTrabalhos() {
       ) : filtrados.length === 0 ? (
         <Alerta>{data.length === 0 ? 'Nenhum trabalho cadastrado ainda.' : 'Nenhum trabalho com esses filtros.'}</Alerta>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+        <div className="relative overflow-x-auto rounded-xl border border-stone-200 bg-white">
           <table className="w-full min-w-[44rem] text-sm">
             <thead className="bg-stone-50 text-left text-stone-600">
               <tr>
