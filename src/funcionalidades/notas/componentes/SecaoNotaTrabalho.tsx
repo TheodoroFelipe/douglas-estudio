@@ -1,6 +1,7 @@
 import { Alerta } from '../../../componentes/ui/Alerta'
 import { BotaoLink } from '../../../componentes/ui/CabecalhoPagina'
 import { Carregando } from '../../../componentes/ui/Carregando'
+import { LinkEmissorNfse } from '../../../componentes/ui/LinkEmissorNfse'
 import { Selo } from '../../../componentes/ui/Selo'
 import { formatarData } from '../../../lib/datas'
 import { centavosDoBanco, formatarReais } from '../../../lib/dinheiro'
@@ -53,7 +54,10 @@ export function SecaoNotaTrabalho({ trabalhoId, statusTrabalho, valorTotalCentav
       <div className="space-y-3">
         <Selo cor="amarelo">Nota pendente</Selo>
         <p className="text-sm text-stone-600">Trabalho concluído. Emita a NFS-e com o valor total no Emissor Nacional e registre aqui.</p>
-        <BotaoLink para={`/notas/nova?trabalho=${trabalhoId}`}>Registrar nota</BotaoLink>
+        <div className="flex flex-wrap gap-2">
+          <LinkEmissorNfse rotulo="Emitir no gov.br" />
+          <BotaoLink para={`/notas/nova?trabalho=${trabalhoId}`}>Registrar nota</BotaoLink>
+        </div>
       </div>
     )
   } else if (statusTrabalho === 'cancelado') {

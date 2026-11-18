@@ -8,6 +8,7 @@ import { Botao } from '../../../componentes/ui/Botao'
 import { BotaoLink, CabecalhoPagina } from '../../../componentes/ui/CabecalhoPagina'
 import { Campo } from '../../../componentes/ui/Campo'
 import { Carregando } from '../../../componentes/ui/Carregando'
+import { LinkEmissorNfse } from '../../../componentes/ui/LinkEmissorNfse'
 import { Selecao } from '../../../componentes/ui/Selecao'
 import { formatarData, hojeISO } from '../../../lib/datas'
 import { centavosDoBanco, centavosParaCampo, formatarReais } from '../../../lib/dinheiro'
@@ -29,6 +30,7 @@ export function PaginaNovoRecebimento() {
     <>
       <CabecalhoPagina
         titulo="Registrar recebimento"
+        acoes={<LinkEmissorNfse />}
         voltar={trabalhoId ? { para: `/trabalhos/${trabalhoId}`, rotulo: 'Trabalho' } : { para: '/recebimentos', rotulo: 'Recebimentos' }}
       />
       <div className="max-w-2xl space-y-5">
@@ -256,6 +258,7 @@ function Registrado({ id, valorCentavos, trabalhoId, onOutro }: { id: string; va
         <Botao variante="secundario" onClick={onOutro}>
           Registrar outro recebimento
         </Botao>
+        <LinkEmissorNfse />
       </div>
     </div>
   )

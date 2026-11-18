@@ -7,6 +7,7 @@ import { Botao } from '../../../componentes/ui/Botao'
 import { BotaoLink, CabecalhoPagina } from '../../../componentes/ui/CabecalhoPagina'
 import { Campo } from '../../../componentes/ui/Campo'
 import { Carregando } from '../../../componentes/ui/Carregando'
+import { LinkEmissorNfse } from '../../../componentes/ui/LinkEmissorNfse'
 import { Selecao } from '../../../componentes/ui/Selecao'
 import { hojeISO } from '../../../lib/datas'
 import { centavosDeTexto, centavosDoBanco, centavosParaCampo, formatarReais } from '../../../lib/dinheiro'
@@ -30,6 +31,7 @@ export function PaginaNovaNota() {
       <CabecalhoPagina
         titulo={substitui ? 'Substituir nota fiscal' : 'Registrar nota fiscal'}
         subtitulo="A NFS-e é emitida no Emissor Nacional; aqui você registra a nota já emitida, com o PDF."
+        acoes={<LinkEmissorNfse />}
         voltar={trabalhoId ? { para: `/trabalhos/${trabalhoId}`, rotulo: 'Trabalho' } : { para: '/notas', rotulo: 'Notas fiscais' }}
       />
       <div className="max-w-3xl space-y-5">
