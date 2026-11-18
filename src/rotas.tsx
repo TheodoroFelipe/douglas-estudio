@@ -22,4 +22,4 @@ export const roteador = createBrowserRouter([
       },
     ],
   },
-])
+], { basename: import.meta.env.BASE_URL })

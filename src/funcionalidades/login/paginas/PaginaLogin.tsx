@@ -97,7 +97,7 @@ function FormularioRecuperar({ aoVoltar }: { aoVoltar: () => void }) {
   async function enviar(dados: DadosRecuperarSenha) {
     setErro(null)
     const { error } = await supabase.auth.resetPasswordForEmail(dados.email, {
-      redirectTo: `${window.location.origin}/definir-senha`,
+      redirectTo: `${window.location.origin}${import.meta.env.BASE_URL}definir-senha`,
     })
     if (error) setErro(mensagemErroAuth(error))
     else setEnviado(true)

@@ -25,7 +25,7 @@ Apenas dois usuários, sem cadastro público:
 
 - **Frontend:** React + TypeScript + Vite, Tailwind CSS
 - **Backend:** Supabase (Postgres, Auth, Storage para PDF/XML das notas)
-- **Deploy:** Vercel
+- **Deploy:** GitHub Pages (repositório público), publicado pelo GitHub Actions a cada push na `main`, em https://theodorofelipe.github.io/douglas-estudio/
 - **Validação:** Zod nos formulários
 - **Datas e dinheiro:** valores em `numeric(12,2)` no banco e em centavos/inteiros ou Decimal no front — **nunca float para dinheiro**. Exibir em `pt-BR` (R$ 1.234,56; dd/mm/aaaa). Fuso `America/Sao_Paulo`.
 

@@ -3,7 +3,7 @@
 Controle interno do estúdio Douglas Guimarães Fotografia: trabalhos, parcelas, recebimentos, recibos, notas fiscais (NFS-e) e despesas.
 Regras e decisões: [`CLAUDE.md`](CLAUDE.md) e [`docs/ESPECIFICACAO_MVP.md`](docs/ESPECIFICACAO_MVP.md).
 
-Stack: React + TypeScript + Vite + Tailwind, Supabase (Postgres, Auth, Storage) e deploy na Vercel.
+Stack: React + TypeScript + Vite + Tailwind, Supabase (Postgres, Auth, Storage) e deploy no GitHub Pages.
 
 ## Rodar localmente
 
@@ -38,11 +38,14 @@ npm test            # front (Vitest)
 
 ## Colocar em produção
 
-1. **Supabase:** crie o projeto na região `sa-east-1` (São Paulo).
+Endereço: **https://theodorofelipe.github.io/douglas-estudio/** (GitHub Pages, repositório público). O código fica visível, mas os dados não: só a anon key vai para o front, e o RLS bloqueia quem não tem perfil.
+
+1. **Supabase:** projeto `douglas-fotos` na região `sa-east-1` (São Paulo).
 2. Aplique as migrations: `npx supabase link --project-ref <ref>` e depois `npx supabase db push`.
 3. No painel, em **Authentication → Sign In / Providers**, desligue **Allow new users to sign up**.
-4. Em **Authentication → URL Configuration**, defina a *Site URL* com o domínio da Vercel e adicione `https://<domínio>/**` às *Redirect URLs*. É para lá que vão os links de convite e de recuperação de senha.
+4. Em **Authentication → URL Configuration**, defina a *Site URL* como `https://theodorofelipe.github.io/douglas-estudio/` e adicione `https://theodorofelipe.github.io/douglas-estudio/**` às *Redirect URLs*. É para lá que vão os links de convite e de recuperação de senha.
 5. Convide os dois usuários em **Authentication → Users → Invite user**. Depois, no SQL Editor, crie a linha em `perfis` de cada um (veja o SQL acima; papel `admin` para o Theodoro e `dono` para o Douglas).
-6. **Vercel:** importe o repositório e configure `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (Project Settings → API do Supabase). O `vercel.json` já cuida do roteamento da SPA.
+6. **GitHub:** em **Settings → Pages**, escolha *Source: GitHub Actions*. Em **Settings → Secrets and variables → Actions → Variables**, crie `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (Project Settings → API do Supabase).
+7. Todo push na `main` roda lint, testes e build e publica o site (`.github/workflows/deploy.yml`). O workflow copia o `index.html` para `404.html`, para que as rotas da SPA abram direto pelo link.
 
 Quem é convidado recebe um e-mail com um link e cria a própria senha na tela "Criar senha".
