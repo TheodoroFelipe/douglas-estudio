@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { ehDataValida } from '../../lib/datas'
 import { centavosDeTexto, centavosParaCampo, formatarReais } from '../../lib/dinheiro'
 import { renumerar, somaPlano, type ParcelaPlano } from './plano'
-import { TIPOS_TRABALHO } from './rotulos'
 
 const valorPositivo = (mensagem: string) =>
   z.string().refine((texto) => (centavosDeTexto(texto) ?? 0) > 0, mensagem)
@@ -30,7 +29,7 @@ const linhaParcela = z
 export const esquemaTrabalho = z
   .object({
     cliente_id: z.string().min(1, 'Escolha o cliente.'),
-    tipo: z.enum(Object.keys(TIPOS_TRABALHO) as [keyof typeof TIPOS_TRABALHO]),
+    tipo: z.string().min(1, 'Escolha o tipo.'),
     descricao: z.string().trim().min(1, 'Descreva o trabalho.'),
     data_evento: z.string().refine((d) => d === '' || ehDataValida(d), 'Data inválida.'),
     hora_evento: z.string().refine((h) => h === '' || /^([01]\d|2[0-3]):[0-5]\d$/.test(h), 'Horário inválido.'),

@@ -13,7 +13,8 @@ import { useClientes } from '../../clientes/consultas'
 import { useSalvarTrabalho } from '../consultas'
 import { esquemaTrabalho, linhasParaPlano, planoParaLinhas, type DadosTrabalho, type LinhaParcela } from '../esquemas'
 import { gerarPlano } from '../plano'
-import { TIPOS_TRABALHO } from '../rotulos'
+import { NovoTipoInline } from '../../tipos-trabalho/componentes/NovoTipoInline'
+import { useTiposTrabalho } from '../../tipos-trabalho/consultas'
 
 type Props = {
   id?: string
@@ -24,6 +25,7 @@ export function FormularioTrabalho({ id, valoresIniciais }: Props) {
   const navigate = useNavigate()
   const salvar = useSalvarTrabalho()
   const clientes = useClientes()
+  const tipos = useTiposTrabalho()
   const {
     register,
     control,
@@ -101,13 +103,27 @@ export function FormularioTrabalho({ id, valoresIniciais }: Props) {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          <Selecao rotulo="Tipo" erro={errors.tipo?.message} {...register('tipo')}>
-            {Object.entries(TIPOS_TRABALHO).map(([valor, rotulo]) => (
-              <option key={valor} value={valor}>
-                {rotulo}
-              </option>
-            ))}
-          </Selecao>
+          <div className="space-y-1.5">
+            {/* Só aparece depois de carregar os tipos, para o valor salvo ficar selecionado. */}
+            {tipos.data ? (
+              <Selecao rotulo="Tipo" erro={errors.tipo?.message} {...register('tipo')}>
+                <option value="" disabled>
+                  Escolha o tipo
+                </option>
+                {tipos.data
+                  .filter((t) => t.ativo || t.chave === valoresIniciais.tipo)
+                  .map((t) => (
+                    <option key={t.chave} value={t.chave}>
+                      {t.nome}
+                      {!t.ativo && ' (desativado)'}
+                    </option>
+                  ))}
+              </Selecao>
+            ) : (
+              <Campo rotulo="Tipo" value={tipos.error ? 'Não foi possível carregar os tipos' : 'Carregando…'} disabled readOnly />
+            )}
+            <NovoTipoInline onCriado={(tipo) => setValue('tipo', tipo.chave, { shouldValidate: true, shouldDirty: true })} />
+          </div>
           <div className="grid grid-cols-[1fr_7.5rem] gap-3">
             <Campo rotulo="Data do evento" type="date" erro={errors.data_evento?.message} {...register('data_evento')} />
             <Campo rotulo="Horário" type="time" erro={errors.hora_evento?.message} {...register('hora_evento')} />

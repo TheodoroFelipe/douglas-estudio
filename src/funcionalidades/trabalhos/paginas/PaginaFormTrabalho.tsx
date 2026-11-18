@@ -6,13 +6,12 @@ import { centavosDoBanco, centavosParaCampo } from '../../../lib/dinheiro'
 import { FormularioTrabalho } from '../componentes/FormularioTrabalho'
 import { useTrabalho } from '../consultas'
 import { planoParaLinhas, type DadosTrabalho } from '../esquemas'
-import { TIPOS_TRABALHO, type TipoTrabalho } from '../rotulos'
 
 export function PaginaNovoTrabalho() {
   const [parametros] = useSearchParams()
   const valores: DadosTrabalho = {
     cliente_id: parametros.get('cliente') ?? '',
-    tipo: 'formatura',
+    tipo: '',
     descricao: '',
     data_evento: '',
     hora_evento: '',
@@ -48,7 +47,7 @@ export function PaginaEditarTrabalho() {
   const { trabalho, parcelas } = data
   const valores: DadosTrabalho = {
     cliente_id: trabalho.cliente_id,
-    tipo: (trabalho.tipo in TIPOS_TRABALHO ? trabalho.tipo : 'outro') as TipoTrabalho,
+    tipo: trabalho.tipo,
     descricao: trabalho.descricao,
     data_evento: trabalho.data_evento ?? '',
     hora_evento: trabalho.hora_evento?.slice(0, 5) ?? '',

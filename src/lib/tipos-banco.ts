@@ -277,6 +277,20 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"tipos_trabalho": {
+                  Row: {
+                    "ativo": boolean,"atualizado_em": string,"chave": string,"criado_em": string,"criado_por": string | null,"nome": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"chave"?: string,"criado_em"?: string,"criado_por"?: string | null,"nome": string
+                  }
+                  Update: {
+                    "ativo"?: boolean,"atualizado_em"?: string,"chave"?: string,"criado_em"?: string,"criado_por"?: string | null,"nome"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"trabalhos": {
                   Row: {
                     "atualizado_em": string,"cliente_id": string,"criado_em": string,"criado_por": string | null,"data_conclusao": string | null,"data_evento": string | null,"descricao": string,"hora_evento": string | null,"id": string,"local_evento": string | null,"numero_contrato": string | null,"status": string,"tipo": string,"valor_total": number
@@ -295,6 +309,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "clientes"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "trabalhos_tipo_fkey"
+      columns: ["tipo"]
+isOneToOne: false
+      referencedRelation: "tipos_trabalho"
+      referencedColumns: ["chave"]
     }
                   ]
                 }
@@ -320,6 +340,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "clientes"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "trabalhos_tipo_fkey"
+      columns: ["tipo"]
+isOneToOne: false
+      referencedRelation: "tipos_trabalho"
+      referencedColumns: ["chave"]
     }
                   ]
                 },"vw_consolidado_mensal": {
@@ -420,6 +446,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "clientes"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "trabalhos_tipo_fkey"
+      columns: ["tipo"]
+isOneToOne: false
+      referencedRelation: "tipos_trabalho"
+      referencedColumns: ["chave"]
     }
                   ]
                 }
@@ -462,6 +494,9 @@ isOneToOne: false
       } },
 "hoje":
 { Args: Record<PropertyKey, never>; Returns: string
+                           },
+"normalizar_nome":
+{ Args: { "p_texto": string }; Returns: string
                            },
 "painel_periodo":
 { Args: { "p_fim": string,"p_inicio": string }; Returns: {

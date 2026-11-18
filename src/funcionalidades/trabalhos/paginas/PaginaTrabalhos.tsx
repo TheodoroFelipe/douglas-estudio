@@ -11,9 +11,12 @@ import { centavosDoBanco, formatarReais } from '../../../lib/dinheiro'
 import { normalizarBusca } from '../../clientes/esquemas'
 import { CalendarioTrabalhos } from '../componentes/CalendarioTrabalhos'
 import { useTrabalhos } from '../consultas'
-import { infoStatusTrabalho, rotuloTipo, STATUS_TRABALHO, TIPOS_TRABALHO } from '../rotulos'
+import { useNomeTipo, useTiposTrabalho } from '../../tipos-trabalho/consultas'
+import { infoStatusTrabalho, STATUS_TRABALHO } from '../rotulos'
 
 function ListaTrabalhos() {
+  const tipos = useTiposTrabalho()
+  const nomeTipo = useNomeTipo()
   const { data, isPending, error } = useTrabalhos()
   // Filtros na URL: dá para voltar do detalhe sem perder a seleção.
   const [parametros, setParametros] = useSearchParams()
@@ -56,9 +59,9 @@ function ListaTrabalhos() {
         </Selecao>
         <Selecao rotulo="Tipo" value={tipo} onChange={(e) => definir('tipo', e.target.value)}>
           <option value="">Todos</option>
-          {Object.entries(TIPOS_TRABALHO).map(([valor, rotulo]) => (
-            <option key={valor} value={valor}>
-              {rotulo}
+          {tipos.data?.map((t) => (
+            <option key={t.chave} value={t.chave}>
+              {t.nome}
             </option>
           ))}
         </Selecao>
@@ -94,7 +97,7 @@ function ListaTrabalhos() {
                         {t.descricao}
                       </Link>
                       <p className="text-stone-500">
-                        {t.cliente_nome} · {rotuloTipo(t.tipo)}
+                        {t.cliente_nome} · {nomeTipo(t.tipo)}
                       </p>
                     </td>
                     <td className="whitespace-nowrap px-4 py-3 text-stone-700">{formatarData(t.data_evento) || '—'}</td>
@@ -137,7 +140,17 @@ export function PaginaTrabalhos() {
 
   return (
     <>
-      <CabecalhoPagina titulo="Trabalhos" acoes={<BotaoLink para="/trabalhos/novo">Novo trabalho</BotaoLink>} />
+      <CabecalhoPagina
+        titulo="Trabalhos"
+        acoes={
+          <>
+            <BotaoLink para="/trabalhos/tipos" variante="secundario">
+              Tipos de trabalho
+            </BotaoLink>
+            <BotaoLink para="/trabalhos/novo">Novo trabalho</BotaoLink>
+          </>
+        }
+      />
       <nav aria-label="Visualização" className="mb-5 flex gap-2 border-b border-stone-200">
         <NavLink to="/trabalhos" end className={() => aba(!calendario)} aria-current={!calendario ? 'page' : undefined}>
           Lista

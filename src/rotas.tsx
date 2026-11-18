@@ -13,6 +13,7 @@ import { PaginaNovoRecebimento } from './funcionalidades/recebimentos/paginas/Pa
 import { PaginaRecebimentos } from './funcionalidades/recebimentos/paginas/PaginaRecebimentos'
 import { PaginaRecibos } from './funcionalidades/recibos/paginas/PaginaRecibos'
 import { PaginaEditarTrabalho, PaginaNovoTrabalho } from './funcionalidades/trabalhos/paginas/PaginaFormTrabalho'
+import { PaginaTiposTrabalho } from './funcionalidades/tipos-trabalho/paginas/PaginaTiposTrabalho'
 import { PaginaTrabalho } from './funcionalidades/trabalhos/paginas/PaginaTrabalho'
 import { PaginaTrabalhos } from './funcionalidades/trabalhos/paginas/PaginaTrabalhos'
 import { PaginaNaoEncontrada } from './PaginaNaoEncontrada'
@@ -32,6 +33,7 @@ export const roteador = createBrowserRouter([
           { path: 'clientes/:id', element: <PaginaCliente /> },
           { path: 'trabalhos', element: <PaginaTrabalhos /> },
           { path: 'trabalhos/novo', element: <PaginaNovoTrabalho /> },
+          { path: 'trabalhos/tipos', element: <PaginaTiposTrabalho /> },
           { path: 'trabalhos/:id', element: <PaginaTrabalho /> },
           { path: 'trabalhos/:id/editar', element: <PaginaEditarTrabalho /> },
           { path: 'recebimentos', element: <PaginaRecebimentos /> },

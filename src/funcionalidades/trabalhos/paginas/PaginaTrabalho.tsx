@@ -14,11 +14,13 @@ import { TabelaRecebimentos } from '../../recebimentos/componentes/TabelaRecebim
 import { useRecebimentosDoTrabalho } from '../../recebimentos/consultas'
 import { useAlterarStatusTrabalho, useTrabalho } from '../consultas'
 import { rotuloParcela } from '../plano'
-import { infoStatusParcela, infoStatusTrabalho, rotuloTipo, type StatusTrabalho } from '../rotulos'
+import { useNomeTipo } from '../../tipos-trabalho/consultas'
+import { infoStatusParcela, infoStatusTrabalho, type StatusTrabalho } from '../rotulos'
 
 export function PaginaTrabalho() {
   const { id } = useParams()
   const { data, isPending, error } = useTrabalho(id)
+  const nomeTipo = useNomeTipo()
 
   if (isPending) return <Carregando />
   if (error || !data) {
@@ -45,7 +47,7 @@ export function PaginaTrabalho() {
         subtitulo={
           <span className="flex flex-wrap items-center gap-2">
             <Selo cor={status.cor}>{status.rotulo}</Selo>
-            <span>{rotuloTipo(trabalho.tipo)}</span>
+            <span>{nomeTipo(trabalho.tipo)}</span>
             <span aria-hidden>·</span>
             {trabalho.cliente ? (
               <Link to={`/clientes/${trabalho.cliente.id}`} className="underline underline-offset-4 hover:text-stone-900">

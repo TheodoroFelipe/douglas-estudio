@@ -7,7 +7,8 @@ import { formatarMes, hojeISO } from '../../../lib/datas'
 import { somarMesesAM } from '../../painel/periodo'
 import { diaCurto, eventosPorDia, gradeDoMes, horaCurta } from '../calendario'
 import { useEventos, useQuantosSemData } from '../consultas'
-import { infoStatusTrabalho, rotuloTipo } from '../rotulos'
+import { useNomeTipo } from '../../tipos-trabalho/consultas'
+import { infoStatusTrabalho } from '../rotulos'
 
 type Props = {
   mes: string
@@ -34,6 +35,7 @@ export function CalendarioTrabalhos({ mes, mostrarCancelados, onMes, onMostrarCa
   const fim = semanas[semanas.length - 1][6].data
   const eventos = useEventos(inicio, fim, mostrarCancelados)
   const semData = useQuantosSemData()
+  const nomeTipo = useNomeTipo()
   const porDia = useMemo(() => eventosPorDia(eventos.data ?? []), [eventos.data])
   const [abertos, setAbertos] = useState<Set<string>>(new Set())
 
@@ -165,7 +167,7 @@ export function CalendarioTrabalhos({ mes, mostrarCancelados, onMes, onMostrarCa
                                 {e.descricao}
                               </p>
                               <p className="text-xs text-stone-500">
-                                {[rotuloTipo(e.tipo), e.cliente?.nome, e.local_evento, status.rotulo].filter(Boolean).join(' · ')}
+                                {[nomeTipo(e.tipo), e.cliente?.nome, e.local_evento, status.rotulo].filter(Boolean).join(' · ')}
                               </p>
                             </Link>
                           </li>
