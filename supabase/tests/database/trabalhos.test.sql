@@ -149,6 +149,40 @@ select lives_ok(
   $$ update public.trabalhos set status = 'orcamento' where descricao = 'Ensaio à vista' $$,
   'trabalho cancelado pode ser reativado');
 
+-- -----------------------------------------------------------------------------
+-- Horário e local do evento (calendário)
+-- -----------------------------------------------------------------------------
+select lives_ok(
+  $$ select public.salvar_trabalho(
+       jsonb_build_object('cliente_id', '00000000-0000-0000-0000-0000000000c1', 'tipo', 'casamento',
+                          'descricao', 'Casamento com horário', 'valor_total', '500.00',
+                          'data_evento', '2026-12-12', 'hora_evento', '19:30', 'local_evento', '  Rafain Palace  '),
+       jsonb_build_array(jsonb_build_object('numero', 0, 'valor', '500.00', 'vencimento', '2026-12-01'))) $$,
+  'trabalho grava horário e local do evento');
+
+select results_eq(
+  $$ select hora_evento, local_evento from public.trabalhos where descricao = 'Casamento com horário' $$,
+  $$ values ('19:30'::time, 'Rafain Palace'::text) $$,
+  'horário e local gravados (local sem espaços nas pontas)');
+
+select lives_ok(
+  $$ select public.salvar_trabalho(
+       to_jsonb(t) || '{"hora_evento": "", "local_evento": " "}'::jsonb,
+       (select jsonb_agg(jsonb_build_object('id', p.id, 'numero', p.numero, 'valor', p.valor::text, 'vencimento', p.vencimento))
+          from public.parcelas p where p.trabalho_id = t.id))
+     from public.trabalhos t where t.descricao = 'Casamento com horário' $$,
+  'horário e local podem ser apagados');
+
+select results_eq(
+  $$ select hora_evento, local_evento from public.trabalhos where descricao = 'Casamento com horário' $$,
+  $$ values (null::time, null::text) $$,
+  'campos vazios viram nulo');
+
+select throws_ok(
+  $$ update public.trabalhos set data_evento = null, hora_evento = '10:00' where descricao = 'Casamento com horário' $$,
+  '23514', null,
+  'horário sem data do evento é recusado');
+
 reset role;
 
 select * from finish();

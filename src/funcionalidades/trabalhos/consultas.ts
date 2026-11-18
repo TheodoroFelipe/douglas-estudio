@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { centavosParaBanco } from '../../lib/dinheiro'
 import { supabase } from '../../lib/supabase'
 import type { ParcelaPlano } from './plano'
@@ -44,6 +44,8 @@ export type DadosSalvarTrabalho = {
   tipo: string
   descricao: string
   data_evento: string
+  hora_evento: string
+  local_evento: string
   valor_total_centavos: number
   numero_contrato: string
   parcelas: ParcelaPlano[]
@@ -61,6 +63,8 @@ export function useSalvarTrabalho() {
           tipo: dados.tipo,
           descricao: dados.descricao.trim(),
           data_evento: dados.data_evento,
+          hora_evento: dados.hora_evento,
+          local_evento: dados.local_evento.trim(),
           valor_total: centavosParaBanco(dados.valor_total_centavos),
           numero_contrato: dados.numero_contrato.trim(),
         },
@@ -87,5 +91,40 @@ export function useAlterarStatusTrabalho() {
       if (error) throw error
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['trabalhos'] }),
+  })
+}
+
+/** Trabalhos com evento entre duas datas (para o calendário). */
+export function useEventos(inicio: string, fim: string, comCancelados: boolean) {
+  return useQuery({
+    queryKey: ['trabalhos', 'eventos', inicio, fim, comCancelados],
+    placeholderData: keepPreviousData,
+    queryFn: async () => {
+      let consulta = supabase
+        .from('trabalhos')
+        .select('id, descricao, tipo, status, data_evento, hora_evento, local_evento, cliente:clientes (nome)')
+        .gte('data_evento', inicio)
+        .lte('data_evento', fim)
+      if (!comCancelados) consulta = consulta.neq('status', 'cancelado')
+      const { data, error } = await consulta
+      if (error) throw error
+      return data
+    },
+  })
+}
+
+/** Quantos trabalhos ativos ainda não têm data de evento. */
+export function useQuantosSemData() {
+  return useQuery({
+    queryKey: ['trabalhos', 'sem-data'],
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from('trabalhos')
+        .select('id', { count: 'exact', head: true })
+        .is('data_evento', null)
+        .neq('status', 'cancelado')
+      if (error) throw error
+      return count ?? 0
+    },
   })
 }

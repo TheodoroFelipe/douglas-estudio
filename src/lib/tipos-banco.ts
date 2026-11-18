@@ -279,14 +279,14 @@ isOneToOne: false
                   ]
                 },"trabalhos": {
                   Row: {
-                    "atualizado_em": string,"cliente_id": string,"criado_em": string,"criado_por": string | null,"data_conclusao": string | null,"data_evento": string | null,"descricao": string,"id": string,"numero_contrato": string | null,"status": string,"tipo": string,"valor_total": number
+                    "atualizado_em": string,"cliente_id": string,"criado_em": string,"criado_por": string | null,"data_conclusao": string | null,"data_evento": string | null,"descricao": string,"hora_evento": string | null,"id": string,"local_evento": string | null,"numero_contrato": string | null,"status": string,"tipo": string,"valor_total": number
                   }
                   ComputedFields: never
                   Insert: {
-                    "atualizado_em"?: string,"cliente_id": string,"criado_em"?: string,"criado_por"?: string | null,"data_conclusao"?: string | null,"data_evento"?: string | null,"descricao": string,"id"?: string,"numero_contrato"?: string | null,"status"?: string,"tipo": string,"valor_total": number
+                    "atualizado_em"?: string,"cliente_id": string,"criado_em"?: string,"criado_por"?: string | null,"data_conclusao"?: string | null,"data_evento"?: string | null,"descricao": string,"hora_evento"?: string | null,"id"?: string,"local_evento"?: string | null,"numero_contrato"?: string | null,"status"?: string,"tipo": string,"valor_total": number
                   }
                   Update: {
-                    "atualizado_em"?: string,"cliente_id"?: string,"criado_em"?: string,"criado_por"?: string | null,"data_conclusao"?: string | null,"data_evento"?: string | null,"descricao"?: string,"id"?: string,"numero_contrato"?: string | null,"status"?: string,"tipo"?: string,"valor_total"?: number
+                    "atualizado_em"?: string,"cliente_id"?: string,"criado_em"?: string,"criado_por"?: string | null,"data_conclusao"?: string | null,"data_evento"?: string | null,"descricao"?: string,"hora_evento"?: string | null,"id"?: string,"local_evento"?: string | null,"numero_contrato"?: string | null,"status"?: string,"tipo"?: string,"valor_total"?: number
                   }
                   Relationships: [
                     {

@@ -142,7 +142,11 @@ export function PaginaTrabalho() {
               Dados
             </h2>
             <dl className="space-y-2 text-sm">
-              <Dado rotulo="Data do evento">{formatarData(trabalho.data_evento) || '—'}</Dado>
+              <Dado rotulo="Data do evento">
+                {formatarData(trabalho.data_evento) || '—'}
+                {trabalho.hora_evento && `, ${trabalho.hora_evento.slice(0, 5)}`}
+              </Dado>
+              {trabalho.local_evento && <Dado rotulo="Local">{trabalho.local_evento}</Dado>}
               <Dado rotulo="Concluído em">{formatarData(trabalho.data_conclusao) || '—'}</Dado>
               <Dado rotulo="Contrato">{trabalho.numero_contrato || '—'}</Dado>
             </dl>

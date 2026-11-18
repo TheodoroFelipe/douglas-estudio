@@ -33,11 +33,16 @@ export const esquemaTrabalho = z
     tipo: z.enum(Object.keys(TIPOS_TRABALHO) as [keyof typeof TIPOS_TRABALHO]),
     descricao: z.string().trim().min(1, 'Descreva o trabalho.'),
     data_evento: z.string().refine((d) => d === '' || ehDataValida(d), 'Data inválida.'),
+    hora_evento: z.string().refine((h) => h === '' || /^([01]\d|2[0-3]):[0-5]\d$/.test(h), 'Horário inválido.'),
+    local_evento: z.string().max(200, 'Use no máximo 200 caracteres.'),
     valor_total: valorPositivo('Informe o valor total.'),
     numero_contrato: z.string(),
     parcelas: z.array(linhaParcela).min(1, 'Gere ou adicione pelo menos uma parcela.'),
   })
   .superRefine((dados, ctx) => {
+    if (dados.hora_evento && !dados.data_evento) {
+      ctx.addIssue({ code: 'custom', path: ['hora_evento'], message: 'Informe também a data do evento.' })
+    }
     const total = centavosDeTexto(dados.valor_total)
     if (!total || dados.parcelas.length === 0) return
     const soma = somaPlano(dados.parcelas.map((p) => ({ valorCentavos: centavosDeTexto(p.valor) ?? 0 })))

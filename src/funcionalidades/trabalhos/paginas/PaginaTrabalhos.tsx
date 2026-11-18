@@ -1,18 +1,19 @@
 import { useMemo } from 'react'
-import { Link, useSearchParams } from 'react-router'
+import { Link, NavLink, useSearchParams } from 'react-router'
 import { Alerta } from '../../../componentes/ui/Alerta'
 import { BotaoLink, CabecalhoPagina } from '../../../componentes/ui/CabecalhoPagina'
 import { Campo } from '../../../componentes/ui/Campo'
 import { Carregando } from '../../../componentes/ui/Carregando'
 import { Selecao } from '../../../componentes/ui/Selecao'
 import { Selo } from '../../../componentes/ui/Selo'
-import { formatarData } from '../../../lib/datas'
+import { formatarData, hojeISO } from '../../../lib/datas'
 import { centavosDoBanco, formatarReais } from '../../../lib/dinheiro'
 import { normalizarBusca } from '../../clientes/esquemas'
+import { CalendarioTrabalhos } from '../componentes/CalendarioTrabalhos'
 import { useTrabalhos } from '../consultas'
 import { infoStatusTrabalho, rotuloTipo, STATUS_TRABALHO, TIPOS_TRABALHO } from '../rotulos'
 
-export function PaginaTrabalhos() {
+function ListaTrabalhos() {
   const { data, isPending, error } = useTrabalhos()
   // Filtros na URL: dá para voltar do detalhe sem perder a seleção.
   const [parametros, setParametros] = useSearchParams()
@@ -42,8 +43,6 @@ export function PaginaTrabalhos() {
 
   return (
     <>
-      <CabecalhoPagina titulo="Trabalhos" acoes={<BotaoLink para="/trabalhos/novo">Novo trabalho</BotaoLink>} />
-
       <div className="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Campo rotulo="Buscar" type="search" placeholder="Descrição ou cliente" value={busca} onChange={(e) => definir('busca', e.target.value)} />
         <Selecao rotulo="Status" value={status} onChange={(e) => definir('status', e.target.value === 'ativos' ? '' : e.target.value)}>
@@ -116,6 +115,46 @@ export function PaginaTrabalhos() {
             </tbody>
           </table>
         </div>
+      )}
+    </>
+  )
+}
+
+export function PaginaTrabalhos() {
+  const [parametros, setParametros] = useSearchParams()
+  const calendario = parametros.get('aba') === 'calendario'
+  const mesCalendario = /^\d{4}-(0[1-9]|1[0-2])$/.test(parametros.get('mes') ?? '') ? parametros.get('mes')! : hojeISO().slice(0, 7)
+  const mostrarCancelados = parametros.get('cancelados') === '1'
+
+  function definirCalendario(mes: string, cancelados: boolean) {
+    const novos: Record<string, string> = { aba: 'calendario', mes }
+    if (cancelados) novos.cancelados = '1'
+    setParametros(novos, { replace: true })
+  }
+
+  const aba = (ativa: boolean) =>
+    `-mb-px border-b-2 px-3 py-2 text-sm font-medium ${ativa ? 'border-stone-900 text-stone-900' : 'border-transparent text-stone-500 hover:text-stone-800'}`
+
+  return (
+    <>
+      <CabecalhoPagina titulo="Trabalhos" acoes={<BotaoLink para="/trabalhos/novo">Novo trabalho</BotaoLink>} />
+      <nav aria-label="Visualização" className="mb-5 flex gap-2 border-b border-stone-200">
+        <NavLink to="/trabalhos" end className={() => aba(!calendario)} aria-current={!calendario ? 'page' : undefined}>
+          Lista
+        </NavLink>
+        <NavLink to="/trabalhos?aba=calendario" className={() => aba(calendario)} aria-current={calendario ? 'page' : undefined}>
+          Calendário
+        </NavLink>
+      </nav>
+      {calendario ? (
+        <CalendarioTrabalhos
+          mes={mesCalendario}
+          mostrarCancelados={mostrarCancelados}
+          onMes={(mes) => definirCalendario(mes, mostrarCancelados)}
+          onMostrarCancelados={(mostrar) => definirCalendario(mesCalendario, mostrar)}
+        />
+      ) : (
+        <ListaTrabalhos />
       )}
     </>
   )

@@ -16,6 +16,8 @@ const trabalho: DadosTrabalho = {
   tipo: 'formatura',
   descricao: 'Formatura Medicina UNILA 2026',
   data_evento: '',
+  hora_evento: '',
+  local_evento: '',
   valor_total: '3.000,00',
   numero_contrato: '',
   parcelas: [linha('600,00', { sinal: true }), ...Array.from({ length: 8 }, () => linha('300,00'))],
@@ -44,6 +46,15 @@ describe('esquemaTrabalho', () => {
     const parcelas = [linha('500,00', { sinal: true, pagoCentavos: 60000 }), linha('2.500,00')]
     const resultado = esquemaTrabalho.safeParse({ ...trabalho, parcelas })
     expect(resultado.error?.issues[0]).toMatchObject({ path: ['parcelas', 0, 'valor'], message: 'Já foram recebidos R$ 600,00.' })
+  })
+
+  it('horário exige data e formato HH:MM', () => {
+    expect(esquemaTrabalho.safeParse({ ...trabalho, hora_evento: '19:30' }).error?.issues[0]).toMatchObject({
+      path: ['hora_evento'],
+      message: 'Informe também a data do evento.',
+    })
+    expect(esquemaTrabalho.safeParse({ ...trabalho, data_evento: '2026-12-12', hora_evento: '19:30', local_evento: 'Rafain' }).success).toBe(true)
+    expect(esquemaTrabalho.safeParse({ ...trabalho, data_evento: '2026-12-12', hora_evento: '25:00' }).success).toBe(false)
   })
 
   it('numera o plano para o banco: sinal 0, depois 1..N', () => {

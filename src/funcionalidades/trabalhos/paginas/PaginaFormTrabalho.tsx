@@ -15,6 +15,8 @@ export function PaginaNovoTrabalho() {
     tipo: 'formatura',
     descricao: '',
     data_evento: '',
+    hora_evento: '',
+    local_evento: '',
     valor_total: '',
     numero_contrato: '',
     parcelas: [],
@@ -49,6 +51,8 @@ export function PaginaEditarTrabalho() {
     tipo: (trabalho.tipo in TIPOS_TRABALHO ? trabalho.tipo : 'outro') as TipoTrabalho,
     descricao: trabalho.descricao,
     data_evento: trabalho.data_evento ?? '',
+    hora_evento: trabalho.hora_evento?.slice(0, 5) ?? '',
+    local_evento: trabalho.local_evento ?? '',
     valor_total: centavosParaCampo(centavosDoBanco(trabalho.valor_total)),
     numero_contrato: trabalho.numero_contrato ?? '',
     parcelas: planoParaLinhas(

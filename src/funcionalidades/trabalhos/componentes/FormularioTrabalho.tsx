@@ -42,6 +42,8 @@ export function FormularioTrabalho({ id, valoresIniciais }: Props) {
         tipo: dados.tipo,
         descricao: dados.descricao,
         data_evento: dados.data_evento,
+        hora_evento: dados.hora_evento,
+        local_evento: dados.local_evento,
         valor_total_centavos: centavosDeTexto(dados.valor_total)!,
         numero_contrato: dados.numero_contrato,
         parcelas: linhasParaPlano(dados.parcelas),
@@ -106,8 +108,19 @@ export function FormularioTrabalho({ id, valoresIniciais }: Props) {
               </option>
             ))}
           </Selecao>
-          <Campo rotulo="Data do evento" type="date" erro={errors.data_evento?.message} {...register('data_evento')} />
+          <div className="grid grid-cols-[1fr_7.5rem] gap-3">
+            <Campo rotulo="Data do evento" type="date" erro={errors.data_evento?.message} {...register('data_evento')} />
+            <Campo rotulo="Horário" type="time" erro={errors.hora_evento?.message} {...register('hora_evento')} />
+          </div>
         </div>
+
+        <Campo
+          rotulo="Local do evento (opcional)"
+          placeholder="Ex.: Rafain Palace"
+          autoComplete="off"
+          erro={errors.local_evento?.message}
+          {...register('local_evento')}
+        />
 
         <Campo
           rotulo="Descrição"
