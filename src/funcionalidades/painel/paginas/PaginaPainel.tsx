@@ -13,7 +13,9 @@ export function PaginaPainel() {
         os <Link to="/trabalhos" className="font-medium text-stone-900 underline underline-offset-4">trabalhos</Link> com o plano
         de parcelas. Cada pagamento vira um{' '}
         <Link to="/recebimentos" className="font-medium text-stone-900 underline underline-offset-4">recebimento</Link>, com
-        recibo em PDF. As notas fiscais entram na próxima fase.
+        recibo em PDF. Ao concluir o trabalho, registre a{' '}
+        <Link to="/notas" className="font-medium text-stone-900 underline underline-offset-4">nota fiscal</Link> emitida no Emissor
+        Nacional.
       </p>
     </div>
   )

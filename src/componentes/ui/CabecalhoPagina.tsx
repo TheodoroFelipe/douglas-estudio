@@ -35,10 +35,12 @@ export function BotaoLink({
   para,
   children,
   variante = 'primario',
+  className = '',
 }: {
   para: string
   children: ReactNode
   variante?: 'primario' | 'secundario'
+  className?: string
 }) {
   const estilo =
     variante === 'primario'
@@ -47,7 +49,7 @@ export function BotaoLink({
   return (
     <Link
       to={para}
-      className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900 ${estilo}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900 ${estilo} ${className}`}
     >
       {children}
     </Link>

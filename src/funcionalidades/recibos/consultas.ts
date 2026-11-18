@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../../lib/supabase'
 import { invalidarFinanceiro } from '../recebimentos/consultas'
-import { baixarPdfArquivado, emitirRecibo, gerarEArquivarPdf, salvarArquivo } from './emissao'
+import { salvarArquivo } from '../../lib/arquivos'
+import { baixarPdfArquivado, emitirRecibo, gerarEArquivarPdf } from './emissao'
 
 function useInvalidarFinanceiro() {
   const queryClient = useQueryClient()

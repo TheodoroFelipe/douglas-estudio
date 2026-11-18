@@ -425,8 +425,14 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "caminho_pdf_recibo":
+            "caminho_de_nota_emitida":
+{ Args: { "p_caminho": string }; Returns: boolean
+                           },
+"caminho_pdf_recibo":
 { Args: { "p_ano": number,"p_numero": number }; Returns: string
+                           },
+"chave_nfse_valida":
+{ Args: { "p_chave": string }; Returns: boolean
                            },
 "eh_admin":
 { Args: Record<PropertyKey, never>; Returns: boolean

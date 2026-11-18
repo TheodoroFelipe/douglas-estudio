@@ -6,6 +6,8 @@ import { PaginaCliente } from './funcionalidades/clientes/paginas/PaginaCliente'
 import { PaginaConfiguracoes } from './funcionalidades/configuracoes/paginas/PaginaConfiguracoes'
 import { PaginaClientes } from './funcionalidades/clientes/paginas/PaginaClientes'
 import { PaginaLogin } from './funcionalidades/login/paginas/PaginaLogin'
+import { PaginaNotas } from './funcionalidades/notas/paginas/PaginaNotas'
+import { PaginaNovaNota } from './funcionalidades/notas/paginas/PaginaNovaNota'
 import { PaginaPainel } from './funcionalidades/painel/paginas/PaginaPainel'
 import { PaginaNovoRecebimento } from './funcionalidades/recebimentos/paginas/PaginaNovoRecebimento'
 import { PaginaRecebimentos } from './funcionalidades/recebimentos/paginas/PaginaRecebimentos'
@@ -35,6 +37,8 @@ export const roteador = createBrowserRouter([
           { path: 'recebimentos', element: <PaginaRecebimentos /> },
           { path: 'recebimentos/novo', element: <PaginaNovoRecebimento /> },
           { path: 'recibos', element: <PaginaRecibos /> },
+          { path: 'notas', element: <PaginaNotas /> },
+          { path: 'notas/nova', element: <PaginaNovaNota /> },
           { element: <RotaAdmin />, children: [{ path: 'configuracoes', element: <PaginaConfiguracoes /> }] },
           { path: '*', element: <PaginaNaoEncontrada /> },
         ],

@@ -102,6 +102,8 @@ export function PaginaTrabalhos() {
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">
                         <Selo cor={info.cor}>{info.rotulo}</Selo>
+                        {t.nota_pendente && <Selo cor="amarelo">Nota pendente</Selo>}
+                        {t.nota_divergente && <Selo cor="amarelo">Nota divergente</Selo>}
                         {!!t.parcelas_vencidas && <Selo cor="vermelho">{t.parcelas_vencidas} vencida{t.parcelas_vencidas > 1 ? 's' : ''}</Selo>}
                       </div>
                     </td>

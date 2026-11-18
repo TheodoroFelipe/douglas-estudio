@@ -25,7 +25,7 @@ export function useTrabalho(id: string | undefined) {
     enabled: !!id,
     queryFn: async () => {
       const [trabalho, resumo, parcelas] = await Promise.all([
-        supabase.from('trabalhos').select('*, cliente:clientes (id, nome)').eq('id', id!).maybeSingle(),
+        supabase.from('trabalhos').select('*, cliente:clientes (id, nome, cpf_cnpj)').eq('id', id!).maybeSingle(),
         supabase.from('vw_conciliacao_trabalho').select('*').eq('trabalho_id', id!).maybeSingle(),
         supabase.from('vw_parcelas_status').select('*').eq('trabalho_id', id!).order('numero'),
       ])

@@ -117,7 +117,7 @@ select is(
 update public.trabalhos set status = 'concluido' where descricao = 'Formatura Ana';
 
 insert into public.notas_fiscais (id, trabalho_id, numero, chave_acesso, data_emissao, data_competencia, valor_servico)
-select '00000000-0000-0000-0000-0000000000f1', id, '7', repeat('7', 50), public.hoje(), public.hoje(), 1000.00
+select '00000000-0000-0000-0000-0000000000f1', id, '7', '41083042211444777000161000000000000726111234567897', public.hoje(), public.hoje(), 1000.00
   from public.trabalhos where descricao = 'Formatura Ana';
 
 select throws_ok(

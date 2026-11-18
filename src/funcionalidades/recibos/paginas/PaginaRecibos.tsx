@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { Alerta } from '../../../componentes/ui/Alerta'
 import { Botao } from '../../../componentes/ui/Botao'
 import { CabecalhoPagina } from '../../../componentes/ui/CabecalhoPagina'
-import { Campo } from '../../../componentes/ui/Campo'
+import { CancelarComMotivo } from '../../../componentes/ui/CancelarComMotivo'
 import { Carregando } from '../../../componentes/ui/Carregando'
 import { Selecao } from '../../../componentes/ui/Selecao'
 import { Selo } from '../../../componentes/ui/Selo'
@@ -144,51 +143,15 @@ function LinhaRecibo({ recibo }: { recibo: Recibo }) {
   )
 }
 
-/** Cancelamento com motivo, na própria linha. */
 function CancelarRecibo({ id, numero }: { id: string; numero: string }) {
   const cancelar = useCancelarRecibo()
-  const [aberto, setAberto] = useState(false)
-  const [motivo, setMotivo] = useState('')
-  const [erroMotivo, setErroMotivo] = useState('')
-
-  if (!aberto) {
-    return (
-      <Botao variante="secundario" className={pequeno} onClick={() => setAberto(true)}>
-        Cancelar
-      </Botao>
-    )
-  }
-
-  function confirmar() {
-    if (!motivo.trim()) {
-      setErroMotivo('Informe o motivo.')
-      return
-    }
-    cancelar.mutate({ id, motivo })
-  }
-
   return (
-    <div role="group" aria-label={`Cancelar recibo ${numero}`} className="w-72 space-y-2 rounded-lg border border-red-200 bg-red-50 p-3">
-      <Campo
-        rotulo={`Motivo do cancelamento do ${numero}`}
-        value={motivo}
-        erro={erroMotivo}
-        autoFocus
-        onChange={(e) => {
-          setMotivo(e.target.value)
-          setErroMotivo('')
-        }}
-      />
-      <p className="text-xs text-stone-600">O recibo fica no histórico. O recebimento poderá ganhar um recibo novo, com outro número.</p>
-      {cancelar.error && <Alerta tipo="erro">{mensagemErroBanco(cancelar.error)}</Alerta>}
-      <div className="flex gap-2">
-        <Botao className={`${pequeno} bg-red-700! hover:bg-red-800!`} carregando={cancelar.isPending} onClick={confirmar}>
-          Cancelar recibo
-        </Botao>
-        <Botao variante="secundario" className={pequeno} disabled={cancelar.isPending} onClick={() => setAberto(false)}>
-          Voltar
-        </Botao>
-      </div>
-    </div>
+    <CancelarComMotivo
+      oQue={`recibo ${numero}`}
+      aviso="O recibo fica no histórico. O recebimento poderá ganhar um recibo novo, com outro número."
+      carregando={cancelar.isPending}
+      erro={cancelar.error ? mensagemErroBanco(cancelar.error) : null}
+      onConfirmar={(motivo) => cancelar.mutate({ id, motivo })}
+    />
   )
 }

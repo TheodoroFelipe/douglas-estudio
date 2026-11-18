@@ -186,9 +186,9 @@ Sugestão inicial (pode editar):
 - [x] Cadastrar uma formatura de R$ 3.000 com sinal de R$ 600 + 8 parcelas de R$ 300, e a soma ser validada
 - [x] Registrar o sinal e gerar o recibo 2026/0001 em PDF com o valor por extenso
 - [x] Ver a parcela mudar para `paga` após o recebimento
-- [ ] Concluir o trabalho e ver o alerta "Nota pendente"
-- [ ] Cadastrar a NFS-e de R$ 3.000 com PDF; o alerta some
-- [ ] Impedir uma segunda nota ativa no mesmo trabalho
+- [x] Concluir o trabalho e ver o alerta "Nota pendente"
+- [x] Cadastrar a NFS-e de R$ 3.000 com PDF; o alerta some
+- [x] Impedir uma segunda nota ativa no mesmo trabalho
 - [ ] Cadastrar um tipo de despesa novo e classificá-lo como direto ou indireto
 - [ ] Não conseguir salvar despesa de tipo direto sem trabalho
 - [ ] Lançar despesas diretas e ver o resultado do trabalho

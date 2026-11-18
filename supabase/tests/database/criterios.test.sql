@@ -219,7 +219,7 @@ select ok(
   'trabalho concluído sem nota gera o alerta "nota pendente"');
 
 insert into public.notas_fiscais (id, trabalho_id, numero, chave_acesso, data_emissao, data_competencia, valor_servico)
-select '00000000-0000-0000-0000-0000000000f1', t.id, '42', repeat('1', 50), public.hoje(), public.hoje(), 3000.00
+select '00000000-0000-0000-0000-0000000000f1', t.id, '42', '41083042211444777000161000000000004226111234567890', public.hoje(), public.hoje(), 3000.00
   from public.trabalhos t
  where t.descricao = 'Formatura Medicina UNILA 2026';
 
@@ -233,7 +233,7 @@ select is(
 
 select throws_ok(
   $$ insert into public.notas_fiscais (trabalho_id, numero, chave_acesso, data_emissao, data_competencia, valor_servico)
-     select t.id, '43', repeat('2', 50), public.hoje(), public.hoje(), 3000.00
+     select t.id, '43', '41083042211444777000161000000000004326111234567893', public.hoje(), public.hoje(), 3000.00
        from public.trabalhos t where t.descricao = 'Formatura Medicina UNILA 2026' $$,
   '23505', null,
   'impede uma segunda nota ativa no mesmo trabalho');
@@ -241,7 +241,7 @@ select throws_ok(
 select lives_ok(
   $$ insert into public.notas_fiscais (trabalho_id, numero, chave_acesso, data_emissao, data_competencia,
                                        valor_servico, nota_substituida_id)
-     select t.id, '44', repeat('3', 50), public.hoje(), public.hoje(), 2900.00,
+     select t.id, '44', '41083042211444777000161000000000004426111234567897', public.hoje(), public.hoje(), 2900.00,
             '00000000-0000-0000-0000-0000000000f1'
        from public.trabalhos t where t.descricao = 'Formatura Medicina UNILA 2026' $$,
   'nota substituta é aceita');

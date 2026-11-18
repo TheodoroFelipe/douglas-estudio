@@ -120,15 +120,3 @@ export function mensagemErroRecibo(erro: unknown): string {
   if (erro && typeof erro === 'object' && 'code' in erro) return mensagemErroBanco(erro)
   return 'Não foi possível gerar ou baixar o PDF. Verifique a conexão e tente de novo.'
 }
-
-/** Entrega o arquivo ao navegador para baixar. */
-export function salvarArquivo({ blob, nome }: ArquivoRecibo) {
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = nome
-  document.body.append(link)
-  link.click()
-  link.remove()
-  setTimeout(() => URL.revokeObjectURL(url), 10_000)
-}
