@@ -22,6 +22,7 @@ export function mensagemErroBanco(erro: unknown, contexto: Contexto = {}): strin
     for (const [constraint, mensagem] of Object.entries(contexto.unico ?? {})) {
       if (texto.includes(constraint)) return mensagem
     }
+    if (!/violates|constraint/i.test(message)) return message
     return 'Já existe um registro com esses dados.'
   }
 

@@ -184,15 +184,15 @@ Sugestão inicial (pode editar):
 
 - [ ] Só os dois usuários convidados conseguem entrar
 - [x] Cadastrar uma formatura de R$ 3.000 com sinal de R$ 600 + 8 parcelas de R$ 300, e a soma ser validada
-- [ ] Registrar o sinal e gerar o recibo 2026/0001 em PDF com o valor por extenso
-- [ ] Ver a parcela mudar para `paga` após o recebimento
+- [x] Registrar o sinal e gerar o recibo 2026/0001 em PDF com o valor por extenso
+- [x] Ver a parcela mudar para `paga` após o recebimento
 - [ ] Concluir o trabalho e ver o alerta "Nota pendente"
 - [ ] Cadastrar a NFS-e de R$ 3.000 com PDF; o alerta some
 - [ ] Impedir uma segunda nota ativa no mesmo trabalho
 - [ ] Cadastrar um tipo de despesa novo e classificá-lo como direto ou indireto
 - [ ] Não conseguir salvar despesa de tipo direto sem trabalho
 - [ ] Lançar despesas diretas e ver o resultado do trabalho
-- [ ] Recibo sai com o logo do estúdio
+- [x] Recibo sai com o logo do estúdio
 - [ ] Painel consolidado mostra receitas, despesas e resultado por mês
 - [ ] CSV do mês abre certo no Excel (separador `;`, decimal `,`, UTF-8 com BOM)
 

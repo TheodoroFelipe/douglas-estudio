@@ -21,13 +21,19 @@ insert into public.perfis (id, nome, papel) values
   ('00000000-0000-0000-0000-00000000000a', 'Theodoro', 'admin'),
   ('00000000-0000-0000-0000-00000000000d', 'Douglas', 'dono');
 
+-- Dados do estúdio exigidos no recibo (preenchidos pelo admin em Configurações).
+update public.configuracoes
+   set razao_social = 'Douglas Guimarães Fotografia LTDA', cnpj = '11444777000161',
+       endereco = 'Rua Teste, 100', responsavel_assinatura = 'Douglas Guimarães', logo_path = 'logo';
+
 -- Daqui em diante, como o dono.
 set local role authenticated;
 select set_config('request.jwt.claims',
   '{"sub":"00000000-0000-0000-0000-00000000000d","role":"authenticated"}', true);
 
-insert into public.clientes (id, nome, tipo_pessoa, cpf_cnpj) values
-  ('00000000-0000-0000-0000-0000000000c1', 'Comissão Medicina UNILA 2026', 'PJ', '11222333000181');
+insert into public.clientes (id, nome, tipo_pessoa, cpf_cnpj, endereco) values
+  ('00000000-0000-0000-0000-0000000000c1', 'Comissão Medicina UNILA 2026', 'PJ', '11222333000181',
+   'Av. Tancredo Neves, 6731, Foz do Iguaçu/PR');
 
 -- -----------------------------------------------------------------------------
 -- Trabalho com plano de parcelas

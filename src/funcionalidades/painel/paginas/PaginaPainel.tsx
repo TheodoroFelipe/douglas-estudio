@@ -11,7 +11,9 @@ export function PaginaPainel() {
       <p className="mt-2 text-stone-600">
         Cadastre os <Link to="/clientes" className="font-medium text-stone-900 underline underline-offset-4">clientes</Link> e
         os <Link to="/trabalhos" className="font-medium text-stone-900 underline underline-offset-4">trabalhos</Link> com o plano
-        de parcelas. Recebimentos, recibos e notas fiscais entram nas próximas fases.
+        de parcelas. Cada pagamento vira um{' '}
+        <Link to="/recebimentos" className="font-medium text-stone-900 underline underline-offset-4">recebimento</Link>, com
+        recibo em PDF. As notas fiscais entram na próxima fase.
       </p>
     </div>
   )

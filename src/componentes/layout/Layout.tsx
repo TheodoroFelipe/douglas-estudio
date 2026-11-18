@@ -8,7 +8,10 @@ type ItemMenu = { rotulo: string; caminho: string; soAdmin?: boolean }
 const itensMenu: ItemMenu[] = [
   { rotulo: 'Painel', caminho: '/' },
   { rotulo: 'Trabalhos', caminho: '/trabalhos' },
+  { rotulo: 'Recebimentos', caminho: '/recebimentos' },
+  { rotulo: 'Recibos', caminho: '/recibos' },
   { rotulo: 'Clientes', caminho: '/clientes' },
+  { rotulo: 'Configurações', caminho: '/configuracoes', soAdmin: true },
 ]
 
 export function Layout() {

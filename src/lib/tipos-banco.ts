@@ -241,6 +241,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "recebimentos"
       referencedColumns: ["id"]
+    },{
+      foreignKeyName: "recibos_recebimento_id_fkey"
+      columns: ["recebimento_id"]
+isOneToOne: false
+      referencedRelation: "vw_recebimentos"
+      referencedColumns: ["id"]
     }
                   ]
                 },"sequencia_recibos": {
@@ -358,6 +364,50 @@ isOneToOne: false
       referencedColumns: ["trabalho_id"]
     }
                   ]
+                },"vw_recebimentos": {
+                  Row: {
+                    "cliente_id": string,"cliente_nome": string,"criado_em": string,"data_recebimento": string,"forma_pagamento": string,"id": string,"observacoes": string | null,"parcela_id": string | null,"parcela_numero": number | null,"recibo_ano": number | null,"recibo_id": string | null,"recibo_numero": number | null,"recibo_pdf": string | null,"status": string,"taxa": number,"total_parcelas": number | null,"trabalho_descricao": string,"trabalho_id": string,"trabalho_status": string,"valor": number
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "recebimentos_parcela_id_fkey"
+      columns: ["parcela_id"]
+isOneToOne: false
+      referencedRelation: "parcelas"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "recebimentos_parcela_id_fkey"
+      columns: ["parcela_id"]
+isOneToOne: false
+      referencedRelation: "vw_parcelas_status"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "recebimentos_trabalho_id_fkey"
+      columns: ["trabalho_id"]
+isOneToOne: false
+      referencedRelation: "trabalhos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "recebimentos_trabalho_id_fkey"
+      columns: ["trabalho_id"]
+isOneToOne: false
+      referencedRelation: "vw_conciliacao_trabalho"
+      referencedColumns: ["trabalho_id"]
+    },{
+      foreignKeyName: "recebimentos_trabalho_id_fkey"
+      columns: ["trabalho_id"]
+isOneToOne: false
+      referencedRelation: "vw_resultado_trabalho"
+      referencedColumns: ["trabalho_id"]
+    },{
+      foreignKeyName: "trabalhos_cliente_id_fkey"
+      columns: ["cliente_id"]
+isOneToOne: false
+      referencedRelation: "clientes"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"vw_resultado_trabalho": {
                   Row: {
                     "cliente_id": string,"cliente_nome": string,"data_conclusao": string | null,"data_evento": string | null,"descricao": string,"despesas_diretas": number | null,"despesas_lancadas": number | null,"margem_percentual": number | null,"resultado": number | null,"status": string,"taxas_recebimento": number | null,"tipo": string,"total_recebido": number | null,"trabalho_id": string,"valor_total": number
@@ -375,7 +425,10 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "eh_admin":
+            "caminho_pdf_recibo":
+{ Args: { "p_ano": number,"p_numero": number }; Returns: string
+                           },
+"eh_admin":
 { Args: Record<PropertyKey, never>; Returns: boolean
                            },
 "eh_usuario":

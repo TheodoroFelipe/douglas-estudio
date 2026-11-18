@@ -1,11 +1,15 @@
 import { createBrowserRouter } from 'react-router'
-import { RotaProtegida } from './auth/RotaProtegida'
+import { RotaAdmin, RotaProtegida } from './auth/RotaProtegida'
 import { Layout } from './componentes/layout/Layout'
 import { PaginaDefinirSenha } from './funcionalidades/login/paginas/PaginaDefinirSenha'
 import { PaginaCliente } from './funcionalidades/clientes/paginas/PaginaCliente'
+import { PaginaConfiguracoes } from './funcionalidades/configuracoes/paginas/PaginaConfiguracoes'
 import { PaginaClientes } from './funcionalidades/clientes/paginas/PaginaClientes'
 import { PaginaLogin } from './funcionalidades/login/paginas/PaginaLogin'
 import { PaginaPainel } from './funcionalidades/painel/paginas/PaginaPainel'
+import { PaginaNovoRecebimento } from './funcionalidades/recebimentos/paginas/PaginaNovoRecebimento'
+import { PaginaRecebimentos } from './funcionalidades/recebimentos/paginas/PaginaRecebimentos'
+import { PaginaRecibos } from './funcionalidades/recibos/paginas/PaginaRecibos'
 import { PaginaEditarTrabalho, PaginaNovoTrabalho } from './funcionalidades/trabalhos/paginas/PaginaFormTrabalho'
 import { PaginaTrabalho } from './funcionalidades/trabalhos/paginas/PaginaTrabalho'
 import { PaginaTrabalhos } from './funcionalidades/trabalhos/paginas/PaginaTrabalhos'
@@ -28,7 +32,10 @@ export const roteador = createBrowserRouter([
           { path: 'trabalhos/novo', element: <PaginaNovoTrabalho /> },
           { path: 'trabalhos/:id', element: <PaginaTrabalho /> },
           { path: 'trabalhos/:id/editar', element: <PaginaEditarTrabalho /> },
-          // Rotas só do admin entram dentro de { element: <RotaAdmin />, children: [...] }.
+          { path: 'recebimentos', element: <PaginaRecebimentos /> },
+          { path: 'recebimentos/novo', element: <PaginaNovoRecebimento /> },
+          { path: 'recibos', element: <PaginaRecibos /> },
+          { element: <RotaAdmin />, children: [{ path: 'configuracoes', element: <PaginaConfiguracoes /> }] },
           { path: '*', element: <PaginaNaoEncontrada /> },
         ],
       },
