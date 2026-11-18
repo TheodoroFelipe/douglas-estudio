@@ -183,7 +183,7 @@ Sugestão inicial (pode editar):
 ## 6. Critérios de aceite do MVP
 
 - [ ] Só os dois usuários convidados conseguem entrar
-- [ ] Cadastrar uma formatura de R$ 3.000 com sinal de R$ 600 + 8 parcelas de R$ 300, e a soma ser validada
+- [x] Cadastrar uma formatura de R$ 3.000 com sinal de R$ 600 + 8 parcelas de R$ 300, e a soma ser validada
 - [ ] Registrar o sinal e gerar o recibo 2026/0001 em PDF com o valor por extenso
 - [ ] Ver a parcela mudar para `paga` após o recebimento
 - [ ] Concluir o trabalho e ver o alerta "Nota pendente"

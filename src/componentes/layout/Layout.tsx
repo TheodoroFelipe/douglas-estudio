@@ -5,7 +5,11 @@ import { useAuth } from '../../auth/useAuth'
 type ItemMenu = { rotulo: string; caminho: string; soAdmin?: boolean }
 
 // Cada fase acrescenta os seus itens aqui.
-const itensMenu: ItemMenu[] = [{ rotulo: 'Painel', caminho: '/' }]
+const itensMenu: ItemMenu[] = [
+  { rotulo: 'Painel', caminho: '/' },
+  { rotulo: 'Trabalhos', caminho: '/trabalhos' },
+  { rotulo: 'Clientes', caminho: '/clientes' },
+]
 
 export function Layout() {
   const { perfil, ehAdmin, sair } = useAuth()
@@ -87,7 +91,7 @@ export function Layout() {
 function Marca() {
   return (
     <div className="flex items-center gap-2.5">
-      <img src="/favicon.svg" alt="" className="size-8" />
+      <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="size-8" />
       <div className="leading-tight">
         <p className="text-sm font-semibold text-stone-900">Douglas Fotos</p>
         <p className="text-xs text-stone-500">Controle financeiro</p>
