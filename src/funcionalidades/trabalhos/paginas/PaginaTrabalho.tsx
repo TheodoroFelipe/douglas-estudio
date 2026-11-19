@@ -78,9 +78,14 @@ export function PaginaTrabalho() {
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="min-w-0 space-y-8">
           <section aria-labelledby="titulo-parcelas">
-            <h2 id="titulo-parcelas" className="mb-3 text-base font-semibold text-stone-900">
-              Parcelas
-            </h2>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <h2 id="titulo-parcelas" className="text-base font-semibold text-stone-900">
+                Parcelas
+              </h2>
+              <BotaoLink para={`/trabalhos/${trabalho.id}/editar#plano`} variante="secundario" className="px-3! py-1.5!">
+                Editar parcelas
+              </BotaoLink>
+            </div>
             <div className="relative overflow-x-auto rounded-xl border border-stone-200 bg-white">
               <table className="w-full min-w-[34rem] text-sm">
                 <thead className="bg-stone-50 text-left text-stone-600">

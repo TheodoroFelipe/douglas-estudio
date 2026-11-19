@@ -1,4 +1,5 @@
-import { useParams, useSearchParams } from 'react-router'
+import { useEffect } from 'react'
+import { useLocation, useParams, useSearchParams } from 'react-router'
 import { Alerta } from '../../../componentes/ui/Alerta'
 import { CabecalhoPagina } from '../../../componentes/ui/CabecalhoPagina'
 import { Carregando } from '../../../componentes/ui/Carregando'
@@ -32,7 +33,14 @@ export function PaginaNovoTrabalho() {
 
 export function PaginaEditarTrabalho() {
   const { id } = useParams()
+  const { hash } = useLocation()
   const { data, isPending, error } = useTrabalho(id)
+  const carregado = !!data
+
+  // "Editar parcelas" (no detalhe do trabalho) abre direto no plano de parcelas.
+  useEffect(() => {
+    if (carregado && hash) document.getElementById(hash.slice(1))?.scrollIntoView({ block: 'start' })
+  }, [carregado, hash])
 
   if (isPending) return <Carregando />
   if (error || !data) {

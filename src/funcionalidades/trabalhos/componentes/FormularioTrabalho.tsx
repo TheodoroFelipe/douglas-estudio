@@ -159,7 +159,7 @@ export function FormularioTrabalho({ id, valoresIniciais }: Props) {
         </div>
       </section>
 
-      <section className="space-y-5 rounded-xl border border-stone-200 bg-white p-4 sm:p-6" aria-labelledby="titulo-plano">
+      <section id="plano" className="scroll-mt-20 space-y-5 rounded-xl border border-stone-200 bg-white p-4 sm:p-6" aria-labelledby="titulo-plano">
         <div>
           <h2 id="titulo-plano" className="text-base font-semibold text-stone-900">
             Plano de parcelas
