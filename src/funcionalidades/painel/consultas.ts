@@ -1,6 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { centavosDoBanco } from '../../lib/dinheiro'
 import { supabase } from '../../lib/supabase'
+import { somarCategorias } from './categorias'
 import { limitesDoPeriodo } from './periodo'
 
 export type LinhaMes = {
@@ -94,6 +95,64 @@ export function useParcelasEmAberto(inicio: string, fim: string) {
         const t = porId.get(p.trabalho_id)
         return t && t.status !== 'cancelado' ? [{ ...p, trabalho: t }] : []
       })
+    },
+  })
+}
+
+/** Quanto falta receber de todos os trabalhos não cancelados, vencido ou não (não depende do período). */
+export function useTotalEmAberto() {
+  return useQuery({
+    queryKey: ['painel', 'em-aberto'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('vw_conciliacao_trabalho').select('saldo_a_receber').neq('status', 'cancelado')
+      if (error) throw error
+      return data.reduce((soma, t) => soma + Math.max(centavosDoBanco(t.saldo_a_receber), 0), 0)
+    },
+  })
+}
+
+/** Trabalhos concluídos no período (pela data de conclusão), do maior para o menor resultado. */
+export function useRankingTrabalhos(inicio: string, fim: string) {
+  return useQuery({
+    queryKey: ['painel', 'ranking', inicio, fim],
+    placeholderData: keepPreviousData,
+    queryFn: async () => {
+      const limites = limitesDoPeriodo(inicio, fim)
+      const { data, error } = await supabase
+        .from('vw_resultado_trabalho')
+        .select('trabalho_id, descricao, cliente_nome, data_conclusao, total_recebido, despesas_diretas, resultado, margem_percentual')
+        .eq('status', 'concluido')
+        .gte('data_conclusao', limites.inicio)
+        .lte('data_conclusao', limites.fim)
+        .order('resultado', { ascending: false })
+      if (error) throw error
+      return data.map((t) => ({
+        id: t.trabalho_id!,
+        descricao: t.descricao ?? '',
+        cliente: t.cliente_nome ?? '',
+        dataConclusao: t.data_conclusao ?? '',
+        recebido: centavosDoBanco(t.total_recebido),
+        despesas: centavosDoBanco(t.despesas_diretas),
+        resultado: centavosDoBanco(t.resultado),
+        margem: t.margem_percentual === null ? null : Number(t.margem_percentual),
+      }))
+    },
+  })
+}
+
+export function useDespesasPorCategoria(inicio: string, fim: string) {
+  return useQuery({
+    queryKey: ['painel', 'categorias', inicio, fim],
+    placeholderData: keepPreviousData,
+    queryFn: async () => {
+      const limites = limitesDoPeriodo(inicio, fim)
+      const { data, error } = await supabase
+        .from('vw_despesas_por_tipo_mensal')
+        .select('tipo_despesa_id, tipo_nome, classificacao, total')
+        .gte('mes', limites.inicio)
+        .lte('mes', limites.fim)
+      if (error) throw error
+      return somarCategorias(data)
     },
   })
 }

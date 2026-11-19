@@ -161,7 +161,7 @@ Data não pode ser futura. Comprovante (PDF ou foto, até 10 MB) no bucket priva
 |---|---|
 | Login | e-mail e senha |
 | Painel do mês | recebido, a receber, vencido, despesas, resultado; lista de alertas; seletor de mês |
-| Painel consolidado | gráfico mensal de receitas × despesas × resultado no ano; ranking dos trabalhos por resultado; despesas por categoria |
+| Painel consolidado | no próprio Painel, pelo período escolhido: gráfico mensal de receitas × despesas × resultado; ranking dos trabalhos concluídos no período (pela data de conclusão) por resultado; despesas por categoria; cartão "Total em aberto" (todos os trabalhos, independente do período) |
 | Clientes | lista com busca; cadastro/edição |
 | Trabalhos | lista com filtros (status, tipo, mês); detalhe com parcelas, recebimentos/recibos, despesas, nota fiscal e o resultado do trabalho; botão **Concluir trabalho** |
 | Novo trabalho | dados + gerador de parcelas (sinal + N parcelas mensais), editável antes de salvar; a soma deve bater com o total |
@@ -170,7 +170,7 @@ Data não pode ser futura. Comprovante (PDF ou foto, até 10 MB) no bucket priva
 | Notas fiscais | lista; cadastrar a NFS-e final do trabalho com PDF/XML (valor já preenchido com o total); cancelar |
 | Despesas | lista por mês, tipo e classificação; lançar despesa escolhendo o tipo (se o tipo for direto, o campo Trabalho aparece e é obrigatório); comprovante opcional |
 | Tipos de despesa | cadastrar, editar e desativar tipos, classificando cada um como direto ou indireto |
-| Exportar | CSV de recebimentos, notas e despesas do mês, para o contador |
+| Exportar | CSV de recebimentos (data do pagamento), notas (competência) e despesas (data) do mês, para o contador; cancelados e estornados entram com o status |
 | Configurações (admin) | dados do estúdio e **upload do logo** (para o recibo), código padrão do serviço (13.03.01), descrição padrão, alíquota |
 
 ## 5. Alertas do painel
@@ -194,7 +194,7 @@ Data não pode ser futura. Comprovante (PDF ou foto, até 10 MB) no bucket priva
 - [x] Impedir uma segunda nota ativa no mesmo trabalho
 - [ ] Cadastrar um tipo de despesa novo e classificá-lo como direto ou indireto
 - [ ] Não conseguir salvar despesa de tipo direto sem trabalho
-- [ ] Lançar despesas diretas e ver o resultado do trabalho
+- [x] Lançar despesas diretas e ver o resultado do trabalho
 - [x] Recibo sai com o logo do estúdio
 - [x] Painel consolidado mostra receitas, despesas e resultado por mês
 - [ ] CSV do mês abre certo no Excel (separador `;`, decimal `,`, UTF-8 com BOM)

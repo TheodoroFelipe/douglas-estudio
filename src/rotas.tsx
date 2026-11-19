@@ -9,6 +9,7 @@ import { PaginaLogin } from './funcionalidades/login/paginas/PaginaLogin'
 import { PaginaDespesas } from './funcionalidades/despesas/paginas/PaginaDespesas'
 import { PaginaFormDespesa } from './funcionalidades/despesas/paginas/PaginaFormDespesa'
 import { PaginaTiposDespesa } from './funcionalidades/despesas/paginas/PaginaTiposDespesa'
+import { PaginaExportar } from './funcionalidades/exportar/paginas/PaginaExportar'
 import { PaginaNotas } from './funcionalidades/notas/paginas/PaginaNotas'
 import { PaginaNovaNota } from './funcionalidades/notas/paginas/PaginaNovaNota'
 import { PaginaPainel } from './funcionalidades/painel/paginas/PaginaPainel'
@@ -48,6 +49,7 @@ export const roteador = createBrowserRouter([
           { path: 'despesas/nova', element: <PaginaFormDespesa /> },
           { path: 'despesas/tipos', element: <PaginaTiposDespesa /> },
           { path: 'despesas/:id', element: <PaginaFormDespesa /> },
+          { path: 'exportar', element: <PaginaExportar /> },
           { element: <RotaAdmin />, children: [{ path: 'configuracoes', element: <PaginaConfiguracoes /> }] },
           { path: '*', element: <PaginaNaoEncontrada /> },
         ],

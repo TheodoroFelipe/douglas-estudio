@@ -15,12 +15,12 @@ export const MENSAGENS_ERRO_TIPO_DESPESA = {
 const SELECAO_DESPESA =
   '*, tipo:tipos_despesa (id, nome, classificacao), trabalho:trabalhos (id, descricao, cliente:clientes (nome))'
 
-/** Despesa mexe nas listas de despesas, no resultado dos trabalhos e no painel. */
+/** Despesa mexe nas listas de despesas e no resultado dos trabalhos (o painel é atualizado em main.tsx). */
 function useInvalidarDespesas() {
   const queryClient = useQueryClient()
   return () =>
     Promise.all(
-      ['despesas', 'tipos-despesa', 'trabalhos', 'painel'].map((chave) => queryClient.invalidateQueries({ queryKey: [chave] })),
+      ['despesas', 'tipos-despesa', 'trabalhos'].map((chave) => queryClient.invalidateQueries({ queryKey: [chave] })),
     )
 }
 

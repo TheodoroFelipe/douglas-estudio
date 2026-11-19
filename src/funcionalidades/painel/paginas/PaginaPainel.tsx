@@ -13,7 +13,9 @@ import { rotuloParcela } from '../../trabalhos/plano'
 import { infoStatusParcela } from '../../trabalhos/rotulos'
 import { agruparAlertas, linkDoAlerta } from '../alertas'
 import { GraficoMensal } from '../componentes/GraficoMensal'
-import { somarMeses, useAlertas, usePainelPeriodo, useParcelasEmAberto, useTotalVencido } from '../consultas'
+import { DespesasPorCategoria } from '../componentes/DespesasPorCategoria'
+import { RankingTrabalhos } from '../componentes/RankingTrabalhos'
+import { somarMeses, useAlertas, usePainelPeriodo, useParcelasEmAberto, useTotalEmAberto, useTotalVencido } from '../consultas'
 import { resolverPeriodo, TIPOS_PERIODO, type TipoPeriodo } from '../periodo'
 
 // Cores fixas por entidade (paleta validada para daltonismo; ver o skill de dataviz):
@@ -29,6 +31,7 @@ export function PaginaPainel() {
   // Uma consulta cobre o gráfico (que, no modo mês, mostra 6 meses) e os totais.
   const painel = usePainelPeriodo(periodo.graficoInicio, periodo.graficoFim)
   const vencido = useTotalVencido()
+  const emAberto = useTotalEmAberto()
 
   const linhasPeriodo = useMemo(
     () => (painel.data ?? []).filter((l) => l.mes >= periodo.inicio && l.mes <= periodo.fim),
@@ -85,12 +88,15 @@ export function PaginaPainel() {
         <Alerta tipo="erro">Não foi possível carregar o painel.</Alerta>
       ) : (
         <div className={`space-y-8 transition-opacity ${painel.isPlaceholderData ? 'opacity-60' : ''}`}>
-          <dl className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <dl className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <Cartao rotulo="Recebido" valor={formatarReais(total.recebido)} cor={COR.recebido}>
               {total.taxas > 0 ? `Líquido ${formatarReais(total.recebido - total.taxas)} (taxas ${formatarReais(total.taxas)})` : 'Sem taxas de cartão'}
             </Cartao>
             <Cartao rotulo="A receber no período" valor={formatarReais(total.aReceber)}>
-              De {formatarReais(total.previsto)} previstos nas parcelas
+              Parcelas com vencimento em {periodo.rotulo} ({formatarReais(total.previsto)} previstos)
+            </Cartao>
+            <Cartao rotulo="Total em aberto" valor={emAberto.data === undefined ? '…' : formatarReais(emAberto.data)}>
+              Falta receber de todos os trabalhos, vencido ou não
             </Cartao>
             <Cartao
               rotulo="Vencido até hoje"
@@ -105,7 +111,7 @@ export function PaginaPainel() {
             <Cartao rotulo="Despesas" valor={formatarReais(despesas)} cor={COR.despesas}>
               Diretas {formatarReais(total.despesasDiretas)} · indiretas {formatarReais(total.despesasIndiretas)}
             </Cartao>
-            <Cartao rotulo="Resultado" valor={formatarReais(total.resultado)} cor={COR.resultado}>
+            <Cartao rotulo="Resultado" valor={formatarReais(total.resultado)} cor={COR.resultado} className="xl:col-span-2">
               Recebido menos despesas
             </Cartao>
           </dl>
@@ -136,6 +142,11 @@ export function PaginaPainel() {
             />
           </div>
 
+          <RankingTrabalhos inicio={periodo.inicio} fim={periodo.fim} rotulo={periodo.rotulo} />
+          <div className="max-w-3xl">
+            <DespesasPorCategoria inicio={periodo.inicio} fim={periodo.fim} rotulo={periodo.rotulo} cor={COR.despesas} />
+          </div>
+
           <Alertas />
           <ParcelasEmAberto inicio={periodo.inicio} fim={periodo.fim} rotulo={periodo.rotulo} hoje={hoje} />
         </div>
@@ -144,9 +155,11 @@ export function PaginaPainel() {
   )
 }
 
-function Cartao({ rotulo, valor, cor, alerta, children }: { rotulo: string; valor: string; cor?: string; alerta?: boolean; children: ReactNode }) {
+type PropsCartao = { rotulo: string; valor: string; cor?: string; alerta?: boolean; className?: string; children: ReactNode }
+
+function Cartao({ rotulo, valor, cor, alerta, className = '', children }: PropsCartao) {
   return (
-    <div className={`rounded-xl border bg-white px-4 py-3 ${alerta ? 'border-red-200' : 'border-stone-200'}`}>
+    <div className={`rounded-xl border bg-white px-4 py-3 ${alerta ? 'border-red-200' : 'border-stone-200'} ${className}`}>
       <dt className="flex items-center gap-1.5 text-sm text-stone-600">
         {cor && <span aria-hidden className="inline-block size-2.5 rounded-sm" style={{ background: cor }} />}
         {rotulo}
