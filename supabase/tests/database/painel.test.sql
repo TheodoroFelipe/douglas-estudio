@@ -64,7 +64,7 @@ insert into public.despesas (tipo_despesa_id, data, valor) values
   ('00000000-0000-0000-0000-0000000000d2', '2025-02-20', 400.00);
 insert into public.despesas (id, tipo_despesa_id, data, valor) values
   ('00000000-0000-0000-0000-0000000000d9', '00000000-0000-0000-0000-0000000000d2', '2025-02-21', 999.00);
-update public.despesas set status = 'cancelada' where id = '00000000-0000-0000-0000-0000000000d9';
+update public.despesas set status = 'cancelada', motivo_cancelamento = 'Teste' where id = '00000000-0000-0000-0000-0000000000d9';
 
 -- -----------------------------------------------------------------------------
 -- Uma linha por mês

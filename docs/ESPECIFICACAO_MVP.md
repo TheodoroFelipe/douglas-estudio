@@ -146,6 +146,9 @@ Sugestão inicial (pode editar):
 | fornecedor | text | opcional |
 | comprovante | text | caminho no Storage, opcional |
 | status | text | `ativa`, `cancelada` |
+| motivo_cancelamento | text | obrigatório ao cancelar; despesa cancelada não muda mais |
+
+Data não pode ser futura. Comprovante (PDF ou foto, até 10 MB) no bucket privado `comprovantes`, em `{id}/comprovante.{ext}`.
 
 ### Views
 - **`vw_conciliacao_trabalho`**: por trabalho, `valor_total`, `total_recebido`, `saldo_a_receber`, `tem_nota`, `valor_nota`, `recebimentos_sem_recibo`, `parcelas_vencidas`.

@@ -11,6 +11,7 @@ const itensMenu: ItemMenu[] = [
   { rotulo: 'Recebimentos', caminho: '/recebimentos' },
   { rotulo: 'Recibos', caminho: '/recibos' },
   { rotulo: 'Notas fiscais', caminho: '/notas' },
+  { rotulo: 'Despesas', caminho: '/despesas' },
   { rotulo: 'Clientes', caminho: '/clientes' },
   { rotulo: 'Configurações', caminho: '/configuracoes', soAdmin: true },
 ]

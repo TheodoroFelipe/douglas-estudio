@@ -53,14 +53,14 @@ export type Database = {
                   ]
                 },"despesas": {
                   Row: {
-                    "atualizado_em": string,"comprovante": string | null,"criado_em": string,"criado_por": string | null,"data": string,"descricao": string | null,"fornecedor": string | null,"id": string,"status": string,"tipo_despesa_id": string,"trabalho_id": string | null,"valor": number
+                    "atualizado_em": string,"comprovante": string | null,"criado_em": string,"criado_por": string | null,"data": string,"descricao": string | null,"fornecedor": string | null,"id": string,"motivo_cancelamento": string | null,"status": string,"tipo_despesa_id": string,"trabalho_id": string | null,"valor": number
                   }
                   ComputedFields: never
                   Insert: {
-                    "atualizado_em"?: string,"comprovante"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor"?: string | null,"id"?: string,"status"?: string,"tipo_despesa_id": string,"trabalho_id"?: string | null,"valor": number
+                    "atualizado_em"?: string,"comprovante"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor"?: string | null,"id"?: string,"motivo_cancelamento"?: string | null,"status"?: string,"tipo_despesa_id": string,"trabalho_id"?: string | null,"valor": number
                   }
                   Update: {
-                    "atualizado_em"?: string,"comprovante"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor"?: string | null,"id"?: string,"status"?: string,"tipo_despesa_id"?: string,"trabalho_id"?: string | null,"valor"?: number
+                    "atualizado_em"?: string,"comprovante"?: string | null,"criado_em"?: string,"criado_por"?: string | null,"data"?: string,"descricao"?: string | null,"fornecedor"?: string | null,"id"?: string,"motivo_cancelamento"?: string | null,"status"?: string,"tipo_despesa_id"?: string,"trabalho_id"?: string | null,"valor"?: number
                   }
                   Relationships: [
                     {
@@ -457,7 +457,13 @@ isOneToOne: false
                 }
           }
           Functions: {
-            "caminho_de_nota_emitida":
+            "caminho_comprovante_valido":
+{ Args: { "p_caminho": string,"p_despesa_id": string }; Returns: boolean
+                           },
+"caminho_de_despesa_ativa":
+{ Args: { "p_caminho": string }; Returns: boolean
+                           },
+"caminho_de_nota_emitida":
 { Args: { "p_caminho": string }; Returns: boolean
                            },
 "caminho_pdf_recibo":

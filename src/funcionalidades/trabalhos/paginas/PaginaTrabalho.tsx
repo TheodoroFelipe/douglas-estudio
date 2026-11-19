@@ -9,6 +9,7 @@ import { Selo } from '../../../componentes/ui/Selo'
 import { formatarData } from '../../../lib/datas'
 import { centavosDoBanco, formatarReais } from '../../../lib/dinheiro'
 import { mensagemErroBanco } from '../../../lib/erros'
+import { DespesasDoTrabalho, ResultadoDoTrabalho } from '../../despesas/componentes/SecoesTrabalho'
 import { SecaoNotaTrabalho } from '../../notas/componentes/SecaoNotaTrabalho'
 import { TabelaRecebimentos } from '../../recebimentos/componentes/TabelaRecebimentos'
 import { useRecebimentosDoTrabalho } from '../../recebimentos/consultas'
@@ -134,10 +135,12 @@ export function PaginaTrabalho() {
           </section>
 
           <RecebimentosDoTrabalho trabalhoId={trabalho.id} />
+          <DespesasDoTrabalho trabalhoId={trabalho.id} />
         </div>
 
         <aside className="space-y-6">
           <SecaoNotaTrabalho trabalhoId={trabalho.id} statusTrabalho={trabalho.status} valorTotalCentavos={contratado} />
+          <ResultadoDoTrabalho trabalhoId={trabalho.id} />
 
           <section aria-labelledby="titulo-dados" className="rounded-xl border border-stone-200 bg-white p-4">
             <h2 id="titulo-dados" className="mb-3 text-base font-semibold text-stone-900">
@@ -154,12 +157,6 @@ export function PaginaTrabalho() {
             </dl>
           </section>
 
-          <section aria-labelledby="titulo-proximas" className="rounded-xl border border-dashed border-stone-300 p-4 text-sm text-stone-500">
-            <h2 id="titulo-proximas" className="mb-1 font-medium text-stone-700">
-              Em breve neste trabalho
-            </h2>
-            Despesas e o resultado do trabalho.
-          </section>
         </aside>
       </div>
     </>
